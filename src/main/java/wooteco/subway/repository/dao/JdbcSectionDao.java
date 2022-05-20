@@ -28,12 +28,12 @@ public class JdbcSectionDao implements SectionDao {
     @Override
     public SectionEntity save(SectionEntity section) {
         Map<String, ?> params = Map.of(
-                "line_id", section.getLine_id(),
+                "line_id", section.getLineId(),
                 "up_station_id", section.getUpStationId(),
                 "down_station_id", section.getDownStationId(),
                 "distance", section.getDistance());
         long savedId = simpleInserter.executeAndReturnKey(params).longValue();
-        return new SectionEntity(savedId, section.getLine_id(), section.getUpStationId(), section.getDownStationId(),
+        return new SectionEntity(savedId, section.getLineId(), section.getUpStationId(), section.getDownStationId(),
                 section.getDistance());
     }
 
@@ -85,7 +85,7 @@ public class JdbcSectionDao implements SectionDao {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 SectionEntity entity = entities.get(i);
-                ps.setLong(1, entity.getLine_id());
+                ps.setLong(1, entity.getLineId());
                 ps.setLong(2, entity.getUpStationId());
                 ps.setLong(3, entity.getDownStationId());
                 ps.setInt(4, entity.getDistance());

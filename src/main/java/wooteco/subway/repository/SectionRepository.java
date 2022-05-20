@@ -47,7 +47,7 @@ public class SectionRepository {
     }
 
     private Section toSection(SectionEntity entity) {
-        return new Section(entity.getId(), entity.getLine_id(),
+        return new Section(entity.getId(), entity.getLineId(),
                 stations.findById(entity.getUpStationId()),
                 stations.findById(entity.getDownStationId()),
                 entity.getDistance());
