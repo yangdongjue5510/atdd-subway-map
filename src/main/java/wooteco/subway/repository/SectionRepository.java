@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 import wooteco.subway.domain.Section;
-import wooteco.subway.exception.notfound.LineNotFoundException;
-import wooteco.subway.repository.dao.LineDao;
 import wooteco.subway.repository.dao.SectionDao;
 import wooteco.subway.repository.entity.SectionEntity;
 
@@ -13,13 +11,10 @@ import wooteco.subway.repository.entity.SectionEntity;
 public class SectionRepository {
 
     private final SectionDao sectionDao;
-    private final LineDao lineDao;
     private final StationRepository stations;
 
-    public SectionRepository(SectionDao sectionDao, LineDao lineDao,
-                             StationRepository stations) {
+    public SectionRepository(SectionDao sectionDao, StationRepository stations) {
         this.sectionDao = sectionDao;
-        this.lineDao = lineDao;
         this.stations = stations;
     }
 
@@ -31,13 +26,7 @@ public class SectionRepository {
     }
 
     public void deleteByLineId(Long lineId) {
-        checkLineExists(lineId);
         sectionDao.deleteByLineId(lineId);
-    }
-
-    private void checkLineExists(Long lineId) {
-        lineDao.findById(lineId)
-                .orElseThrow(LineNotFoundException::new);
     }
 
     public List<Section> findByLineId(Long lineId) {
